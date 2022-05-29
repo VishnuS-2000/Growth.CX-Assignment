@@ -14,7 +14,7 @@ export const Home=()=>{
     /*Get inner-width of browser from context*/
     const deviceWidth=useContext(deviceContext)
 
-    return <div className="w-screen min-h-[400px] items-start home bg-left-bottom flex  flex-col lg:min-h-[600px] items-center justify-center  space-y-32">
+    return <div className="w-full min-h-[400px] items-start home bg-left-bottom flex  flex-col lg:min-h-[600px] items-center justify-center  space-y-32 py-2">
         {deviceWidth<1024?<img src={mobileBackground} className="absolute w-full max-w-[400px]"/>:<img src={desktopBackground} className="absolute w-[95%]"/>}
         
         <div className=" flex justify-center flex-col max-w-[350px] px-2 lg:max-w-[900px] space-y-10">

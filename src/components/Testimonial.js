@@ -1,5 +1,6 @@
-import { useState,useEffect,useContext  } from "react"
+import { useState,useEffect,useContext,useRef } from "react"
 
+import "./test.css"
 
 
 import {data} from "../Assets/data"
@@ -29,56 +30,56 @@ export const Testimonial=()=>{
 const deviceWidth=useContext(deviceContext)
 
 const [active,setActive]=useState(0)
+const refContainer=useRef()
+
+
 const time=5000;
 
+const handleScroll=(e)=>
+{
 
-const updateIndex=()=>{
-    if(active+1==data.length){
+    const position=refContainer.current.scrollLeft;
+    const totalWidth=refContainer.current.scrollWidth-refContainer.current.clientWidth;
 
-        setActive(0)
+    const progress=100-Math.floor((position/totalWidth)*100);
+    
+
+    const index=Math.ceil(100/progress);
+    
+    if(index<data.length){
+        setActive(index-1)
     }
 
     else{
-        setActive(active+1)
-        
+        setActive(data.length-1)
     }
+
     
 }
 
-    useEffect(()=>{
 
-        //Caraousel Time
-        setTimeout(()=>{
-           updateIndex()
-        },time)
-
-    },[active,time])
+    return <div>{deviceWidth<1024?<div className="relative flex flex-col space-y-10 w-full" >
 
 
-
-    return <div>{deviceWidth<1024?<div className="relative flex justify-center p-4 flex-col items-center space-y-5">
-
-        <div className="flex space-x-2 ">
-        <TestimonialCardMobile  data={data[active]}/>
-
-        <div className="w-[40px] h-[320px] border-4 border-gray-400 rounded-3xl absolute left-[-40px]  top-[40px]">
-        </div>
-
-        <div className="w-[40px] h-[320px] border-4 border-gray-400 rounded-3xl absolute right-[-30px] top-[40px]">
-        </div>
-
-        </div>
-
-        <div className="flex space-x-1">
-
-        {data.map((element,index)=>{
-
-            return <img key={index} src={active==index?blackDot:greyDot} className="h-['10px'] w-['10px']"/>
-        })}
+    <div className="flex overflow-x-scroll space-x-2 p-2 scroll-smooth" onScroll={handleScroll} ref={refContainer}>
         
-        </div>
+    {data.map((element,index)=>{
+        return <TestimonialCardMobile key={index} data={element}/>
+    })}
     
-    </div>:
+    </div>
+
+
+    <div className="flex space-x-1 my-5 self-center">
+
+    {data.map((element,index)=>{
+
+        return <img key={index} src={active==index?blackDot:greyDot} className="h-['10px'] w-['10px']"/>
+    })}
+    
+    </div>
+
+</div>:
         
     <div className="w-full flex justify-evenly">
     <div className="w-[80%] flex flex-col space-y-5">
@@ -101,7 +102,7 @@ const updateIndex=()=>{
 const TestimonialCardMobile=({data})=>{
 
 
-    return <div className="relative w-[340px] h-[400px]  rounded-3xl border-4 space-y-10 border-black px-1 py-2 flex flex-col items-start">
+    return <div className="relative min-w-[340px] h-[400px]  rounded-3xl border-4 space-y-10 border-black px-1 py-2 flex flex-col items-start">
            
                 <div className="flex space-x-5 items-center ml-4">
                     <img src={data.profile.photo} className="w-[60px] h-[60px] rounded-sm"/>
@@ -144,7 +145,6 @@ const TestimonialCardDesktop=({data,isLeft})=>{
 
 
 
-
     return <div className={isLeft?"relative w-[660px] h-[450px] self-center right-[180px]":"relative w-[650px] h-[450px] self-center left-[120px]"}>
 
     {isLeft?<div>
@@ -182,11 +182,11 @@ const TestimonialCardDesktop=({data,isLeft})=>{
     
     <div className="flex space-x-2">
    
-    {data.services.map((service)=>{
+    {data.services.map((service,index)=>{
 
 
 
-        return  <div className="bg-gray-100 p-1 rounded-sm">
+        return  <div key={index} className="bg-gray-100 p-1 rounded-sm">
     
         <p>{service}</p></div>
     })}

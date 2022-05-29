@@ -127,7 +127,7 @@ const Pattern=({deviceWidth})=>{
     
 </div></div>:
 <div>
-<img src={desktopBackground} className="w-[100%] h-[900px]"/>
+<img src={desktopBackground} className="w-[200%] h-[900px]"/>
 <div className="absolute rotate-[60deg] space-y-1 top-[-2%] left-[26%]">
 <img src={ellipseSmallDesktop}/>
 <img src={ellipseMediumDesktop}/>

@@ -1,3 +1,5 @@
+import {useState} from "react"
+
 
 /*Import Logo & MenuBar Icon for Mobile*/
 
@@ -9,6 +11,9 @@ import menuBar from "../Assets/Mobile/menu-icon.png"
 
 export const NavBar=()=>{
 
+
+
+    
 
     return <div className="w-full h-[80px] flex justify-start items-center cursor-pointer shadow-md ">
 
@@ -33,7 +38,7 @@ export const NavBar=()=>{
         
         </div>
 
-
+    
         <div>
         <h1 className="drop-shadow">Growth</h1>
         </div>
@@ -53,3 +58,4 @@ export const NavBar=()=>{
     
     </div>
 }
+
